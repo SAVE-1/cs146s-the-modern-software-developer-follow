@@ -186,9 +186,9 @@ def run_coding_agent_loop():
         except (KeyboardInterrupt, EOFError):
             break
         conversation.append({"role": "user", "content": user_input.strip()})
+
         while True:
             assistant_response = execute_llm_call(conversation)
-            conversation.append({"role": "assistant", "content": assistant_response})
             tool_invocations = extract_tool_invocations(assistant_response)
             if not tool_invocations:
                 print("tool not found")
@@ -201,10 +201,6 @@ def run_coding_agent_loop():
             for name, args in tool_invocations:
                 tool = TOOL_REGISTRY[name]
                 resp = ""
-                print("name")
-                print(name)
-                print("args")
-                print(args)
                 if name == "read_file":
                     resp = tool(**args)
                 elif name == "list_files":
