@@ -30,10 +30,14 @@ You have access to a series of tools you can execute. Here are the tools you can
 {tool_list_repr}
 
 When you want to use a tool, reply with exactly one line in the format: 'tool: TOOL_NAME({{JSON_ARGS}})' and nothing else.
-Use compact single-line JSON with double quotes. After receiving a tool_result(...) message, continue the task.
-If no tool is needed, respond normally.
+The JSON must be a single object with named keys matching the parameter names, never positional arguments.
 
-Example: tool: read_file({{"filename": "readme.md"}})
+Examples:
+tool: list_files({{"path": "."}})
+tool: read_file({{"filename": "main.py"}})
+tool: edit_file({{"path": "hello.py", "old_str": "", "new_str": "print(\\"hello world\\")\\n"}})
+
+You can only edit or read files in the current working directory, and it's children.
 
 """
 
