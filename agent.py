@@ -162,7 +162,8 @@ def extract_tool_invocations(text: str) -> List[Tuple[str, Dict[str, Any]]]:
             json_str = rest[:-1].strip()
             args = json.loads(json_str)
             invocations.append((name, args))
-        except Exception:
+        except Exception as e:
+            print(f"[parse error] {e} -> {line}")
             continue
     return invocations
 
