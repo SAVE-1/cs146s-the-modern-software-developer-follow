@@ -9,6 +9,8 @@ from typing import Any, Dict, List, Tuple
 from ollama import chat
 from ollama import ChatResponse
 
+from sandbox import sandboxed
+
 # https://youtu.be/s7ZzkdvCMDY -- How to code Claude Code in ~200 lines of code -- The Modern Software Developer
 
 # 
@@ -51,6 +53,7 @@ def resolve_abs_path(path_str: str) -> Path:
         path = (Path.cwd() / path).resolve()
     return path
 
+@sandboxed()
 def read_file_tool(filename: str) -> Dict[str, Any]:
     """
     Gets the full content of a file provided by the user.
@@ -66,6 +69,7 @@ def read_file_tool(filename: str) -> Dict[str, Any]:
         "content": content
     }
 
+@sandboxed()
 def edit_file_tool(path: str, old_str: str, new_str: str) -> Dict[str, Any]:
     """
     Replaces first occurrence of old_str with new_str in file. If old_str is empty,
@@ -95,29 +99,7 @@ def edit_file_tool(path: str, old_str: str, new_str: str) -> Dict[str, Any]:
         "action": "edited"
     }
 
-def file_exists_in_dir(path: str) -> bool:
-    """
-    Checks if the path exists in current directory or children
-    :param path: the path to the file
-    :return: is path in current_path
-    """
-
-    return check_path(path, os.getcwd())
-
-def check_path(path: str, current_path: str) -> bool:
-    """
-    Checks if the path exists in current directory or children
-    :param path: the path to the file
-    :param current_path: the path to compare against
-    :return: is path in current_path
-    """
-
-    resolved = (ROOT / path).resolve()
-    if not resolved.is_relative_to(ROOT):
-        return False
-
-    return True
-
+@sandboxed()
 def list_files_tool(path: str) -> Dict[str, Any]:
     """
     Lists the files in a directory provided by the user.
