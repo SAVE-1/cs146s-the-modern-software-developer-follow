@@ -191,29 +191,30 @@ def run_coding_agent_loop():
             conversation.append({"role": "assistant", "content": assistant_response})
             tool_invocations = extract_tool_invocations(assistant_response)
             if not tool_invocations:
-                print(f"{ASSISTANT_COLOR}Assistant:{RESET_COLOR}: {assistant_response}")
+                print("tool not found")
+                print(f"{ASSISTANT_COLOR}Assistant:{RESET_COLOR} response: {assistant_response}")
+                conversation.append({
+                    "role": "assistant",
+                    "content": assistant_response
+                })
                 break
             for name, args in tool_invocations:
-                tool = TOOL_REGISTRY.get(name)
-                if tool is None:
-                    resp = {"error": f"unknown tool {name}"}
-                else:
-                    if not isinstance(args, dict):
-                        resp = {"error": f"args must be a JSON object like {{\"filename\": \"x.py\"}}, got {type(args).__name__}"}
-                    else:
-                        try:
-                            resp = tool(**args)
-                        except TypeError as e:
-                            resp = {"error": f"bad arguments: {e}. Expected signature: {inspect.signature(tool)}"}
-                        except Exception as e:
-                            resp = {"error": str(e)}
-
-                print("name: " + name, args)
-                print("RESULT:", resp)
+                tool = TOOL_REGISTRY[name]
+                resp = ""
+                print("name")
+                print(name)
+                print("args")
+                print(args)
+                if name == "read_file":
+                    resp = tool(**args)
+                elif name == "list_files":
+                    resp = tool(**args)
+                elif name == "edit_file":
+                    resp = tool(**args)
                 conversation.append({
                     "role": "user",
                     "content": f"tool_result({json.dumps(resp)})"
                 })
-                
+        
 if __name__ == "__main__":
     run_coding_agent_loop()
