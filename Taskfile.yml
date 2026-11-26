@@ -1,0 +1,31 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  run:
+    cmds:
+      - uv run agent.py
+
+  run2:
+    cmds:
+      - uv run agent.py
+
+  ollama:
+    cmds:
+      # "ollama serve" for whatever reason bugged out, so I'm just using this and then exiting the convo
+      - ollama run qwen3:8b
+
+  init:
+    cmds:
+      # "ollama serve" for whatever reason bugged out, so I'm just using this and then exiting the convo
+      - ollama run qwen3:8b
+
+  uninit:
+    cmds:
+      # "ollama serve" for whatever reason bugged out, so I'm just using this and then exiting the convo
+      - ollama stop qwen3:8b 
+
+  test:
+    cmds:
+      - uv run pytest
