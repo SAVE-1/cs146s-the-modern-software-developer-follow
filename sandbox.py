@@ -13,6 +13,9 @@ def resolve_within(root: Path, path: str | Path) -> Path:
     return resolved
 
 def sandboxed(root: Path | None = None):
+    """
+    Sandboxes agent operations to cwd
+    """
     root = (root or Path.cwd()).resolve()
 
     def decorator(func):
