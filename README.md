@@ -4,7 +4,7 @@ These are my follow-up code and notes for Stanfords CS146S materials ([link here
 
 agent.py is 90-99% based on CS146S video How to code Claude Code in ~200 lines of code by The Modern Software Developer, here: https://youtu.be/s7ZzkdvCMDY
 
-I just changed the model to a small local one, added a small harness thingy for my own sanity (only files in the follow-up folders can be touched by the agent), and a few tests
+I just changed the model to a small local one, added a small harness thingy for my own sanity (only files in the local working directory can be touched by the agent), and a few tests
 
 ## Requirements
 - Ollama
